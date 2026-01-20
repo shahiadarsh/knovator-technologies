@@ -53,7 +53,7 @@ function JobsList() {
     const fetchJobs = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:5000/api/jobs`, {
+            const response = await axios.get(`https://knovator-technologies.vercel.app/api/jobs`, {
                 params: {
                     sourceFeed,
                     page,

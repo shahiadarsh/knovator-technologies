@@ -36,7 +36,7 @@ export default function Dashboard() {
 
     const fetchLogs = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/import-history");
+            const response = await axios.get("https://knovator-technologies.vercel.app/api/import-history");
             setLogs(response.data);
         } catch (error) {
             console.error("Failed to fetch logs", error);
@@ -48,7 +48,7 @@ export default function Dashboard() {
     const handleSync = async () => {
         setSyncing(true);
         try {
-            await axios.post("http://localhost:5000/api/sync-now");
+            await axios.post("https://knovator-technologies.vercel.app/api/sync-now");
             // Optimistic feedback
             setTimeout(fetchLogs, 2000);
         } catch (error) {
