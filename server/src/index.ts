@@ -86,20 +86,24 @@ app.post('/api/sync-now', async (req, res) => {
     }
 });
 
-// Start Server
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+// Database Connection
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/job-importer';
+mongoose
+    .connect(MONGODB_URI)
+    .then(() => {
+        console.log('✅ Connected to MongoDB');
+        initCronJobs();
+    })
+    .catch((err) => {
+        console.error('❌ MongoDB connection error:', err.message);
+        console.log('API is running but Database-dependent features will fail.');
+    });
 
-    // Connect to Database after server starts
-    const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/job-importer';
-    mongoose
-        .connect(MONGODB_URI)
-        .then(() => {
-            console.log('✅ Connected to MongoDB');
-            initCronJobs();
-        })
-        .catch((err) => {
-            console.error('❌ MongoDB connection error:', err.message);
-            console.log('API is running but Database-dependent features will fail.');
-        });
-});
+// Start Server (only if not running on Vercel)
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running on port ${PORT}`);
+    });
+}
+
+export default app;
