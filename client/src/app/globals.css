@@ -1,0 +1,23 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  :root {
+    --foreground-rgb: 248, 250, 252;
+    --background-start-rgb: 2, 6, 23;
+    --background-end-rgb: 15, 23, 42;
+  }
+
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-start-rgb));
+    min-height: 100vh;
+  }
+}
+
+/* Ensure dark mode is enforced if classes aren't loading */
+.dark body {
+  background-color: #020617;
+  color: #f8fafc;
+}
